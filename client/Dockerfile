@@ -31,17 +31,19 @@ COPY . .
 
 # Archive + temp dirs. Mount a volume over /app/archive to persist printed
 # message history across container restarts/rebuilds.
-RUN mkdir -p /app/archive /tmp/printbridge
+RUN mkdir -p /app/archive /tmp/printbridge && chown -R 1000:1000 /tmp/printbridge
 
 ENV TEMP_DIR=/tmp/printbridge
 ENV ARCHIVE_DIR=/app/archive
 ENV NODE_ENV=production
 
-# Non-root by default. Raw device access (/dev/usb/lp0 etc.) is owned by a
-# specific group on the host — see docs/docker-setup.md for how to join it
-# with `--group-add` at `docker run` time, or run as root if you'd rather
-# not deal with group IDs (fine for a single-purpose printer box).
-RUN addgroup -g 1000 printbridge && adduser -D -u 1000 -G printbridge printbridge
-USER printbridge
+# Non-root by default, reusing the `node` user/group (uid/gid 1000) that the
+# base image already provides — adding a new one at 1000 fails since it's
+# taken. Raw device access (/dev/usb/lp0 etc.) is owned by a specific group
+# on the host — see docs/docker-setup.md for how to join it with
+# `--group-add` at `docker run` time, or run as root if you'd rather not deal
+# with group IDs (fine for a single-purpose printer box).
+RUN chown -R node:node /app
+USER node
 
 CMD ["node", "client.js"]

@@ -7,6 +7,15 @@ Versions correspond to feature branches merged into the refactor lineage.
 
 ---
 
+## [3.2.1] - 2026-09-21 — `fix/client-docker-uid-conflict`
+
+### Fixed
+
+- **Client Docker image** — build failed on the `node:20-alpine` base image because it already defines a `node` user/group at uid/gid 1000, conflicting with the Dockerfile's own `printbridge` user creation at the same id. Now reuses the base image's existing `node` user instead of creating a new one.
+- **Client Docker image** — printing failed with `EACCES` writing to `/tmp/printbridge` because that directory was created by `root` before dropping to the non-root `node` user, which had no write access to it. Now `chown`'d to the container's runtime user at build time.
+
+---
+
 ## [3.2.0] - 2026-07-13 — `feat/online-printers-badge`
 
 ### Changed
