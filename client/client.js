@@ -67,6 +67,8 @@ const log = {
 };
 function ts() { return new Date().toISOString().replace("T", " ").slice(0, 19); }
 
+log.info(`[config] Timezone: ${process.env.TZ || "(unset — using container default, likely UTC)"}`);
+
 // ── HTTP ──────────────────────────────────────────────────────────────────────
 const http = axios.create({
   baseURL: SERVER_URL,

@@ -265,6 +265,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 | `SUMATRA_PATH`    | —                           | Path to SumatraPDF.exe            |
 | `TEMP_DIR`        | System temp                 | Temp dir for downloaded files     |
 | `LOG_LEVEL`       | `info`                      | `debug` / `info` / `warn` / `error` |
+| `TZ`              | *(container default)*       | IANA timezone for printed/archived timestamps (e.g. `America/Chicago`). **Required in Docker** — otherwise receipts print UTC. |
 
 ---
 

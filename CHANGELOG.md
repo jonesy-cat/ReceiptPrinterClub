@@ -7,6 +7,14 @@ Versions correspond to feature branches merged into the refactor lineage.
 
 ---
 
+## [3.2.2] - 2026-10-06 — `fix/client-docker-timezone`
+
+### Fixed
+
+- **Client Docker image** — printed receipts and archived message timestamps showed UTC instead of the operator's local time when running via Docker on Linux, because the `node:20-alpine` base image has no `tzdata` package and no `TZ` env var set, so `toLocaleString()` fell back to UTC. Now installs `tzdata` in the image and documents a `TZ` env var in `.env.example`.
+
+---
+
 ## [3.2.1] - 2026-09-21 — `fix/client-docker-uid-conflict`
 
 ### Fixed

@@ -13,7 +13,7 @@ FROM node:20-alpine
 # cups-client provides `lp`/`lpstat`, used by CUPS mode (PRINTER_NAME set).
 # Raw ESC/POS mode (PRINTER_DEVICE set, the default recommendation) doesn't
 # need it, but it's a couple hundred KB so it's always included for convenience.
-RUN apk add --no-cache cups-client
+RUN apk add --no-cache cups-client tzdata
 
 ARG WITH_CANVAS=false
 RUN if [ "$WITH_CANVAS" = "true" ]; then \
